@@ -22,7 +22,10 @@ public class ControlsView {
         this.playButton = playButton;
         this.pauseButton = pauseButton;
         this.stopButton = stopButton;
+        controlsHolder.getChildren().addAll(playButton, pauseButton, stopButton);
     }
 
-
+    HBox getNode() {
+        return controlsHolder;
+    }
 }
