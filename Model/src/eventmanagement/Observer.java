@@ -1,6 +1,6 @@
 package eventmanagement;
 
-public interface Observer {
+public interface Observer<T> {
 
-    void notifyEvent(Event event);
+    void handleDurationRemainingUpdate(T event);
 }

@@ -1,4 +1,4 @@
-package gui;
+package view;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -7,12 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.TimerModel;
 
-public class TomatoView {
+public class TomatoTimerView {
 
     private BorderPane view;
 
 
-    TomatoView() {
+    TomatoTimerView() {
         this.view = new BorderPane();
         TimerModel timerModel = new TimerModel();
         HBox imageAndControls = new HBox();

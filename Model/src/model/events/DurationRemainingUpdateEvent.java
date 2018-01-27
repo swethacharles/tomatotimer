@@ -5,12 +5,12 @@ import eventmanagement.Event;
 
 import java.time.Duration;
 
-public class DurationRemainingEvent implements Event{
+public class DurationRemainingUpdateEvent implements Event{
 
 
     private final Duration durationRemaining;
 
-    public DurationRemainingEvent(Duration durationRemaining) {
+    public DurationRemainingUpdateEvent(Duration durationRemaining) {
         this.durationRemaining = durationRemaining;
     }
 

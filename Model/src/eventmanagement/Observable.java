@@ -6,7 +6,7 @@ package eventmanagement;
  */
 public interface Observable {
 
-    void register(Observer observer);
+    <T extends Event> void registerFor(Class<T> eventClass, Observer<T> observer);
 
-    void deregister(Observer observer);
+    <T extends Event> void deregisterFor(Class<T> eventClass, Observer<T> observer);
 }

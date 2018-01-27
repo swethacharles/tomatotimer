@@ -1,4 +1,4 @@
-package gui;
+package view;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,7 +22,7 @@ public class LaunchTomato extends Application
         primaryStage.setTitle("Hello Tomato!");
 
         StackPane root = new StackPane();
-        root.getChildren().add(new TomatoView().getNode());
+        root.getChildren().add(new TomatoTimerView().getNode());
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
