@@ -15,18 +15,17 @@ import java.time.Duration;
 
 public class TimerView implements Observer<DurationRemainingUpdateEvent>{
 
-    private static final String START_TIME = "25:00";
     private final TimerModel timerModel;
     private HBox timerHolder;
     private Label timeElapsed;
 
     TimerView(TimerModel timerModel) {
-        this(timerModel, new HBox(), new Label(START_TIME));
+        this(timerModel, new HBox());
     }
 
-    private TimerView(TimerModel timerModel, HBox timerHolder, Label timeElapsed) {
+    private TimerView(TimerModel timerModel, HBox timerHolder) {
         this.timerHolder = timerHolder;
-        this.timeElapsed = timeElapsed;
+        this.timeElapsed = new Label(new TimeFormatter().formatDuration(timerModel.getTimerDuration()));
         this.timerModel = timerModel;
         timerModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
         timerModel.registerFor(TimerResetEvent.class, this::handleReset);

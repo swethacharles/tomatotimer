@@ -1,5 +1,6 @@
 package view;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,17 +26,19 @@ public class ControlsView {
         this.playButton = playButton;
         playButton.setGraphic(createImageView("play_image.png"));
         this.pauseButton = pauseButton;
-        pauseButton.setGraphic(createImageView("pause_3.png"));
+        pauseButton.setGraphic(createImageView("pause_image.png"));
         this.resetButton = resetButton;
         resetButton.setGraphic(createImageView("refresh_image.png"));
         this.controlsHolder = controlsHolder;
         this.timerModel = timerModel;
         controlsHolder.setSpacing(5.0);
 
-        controlsHolder.getChildren().addAll(playButton, pauseButton, resetButton);
         playButton.setOnAction(event -> timerModel.play());
         pauseButton.setOnAction(event -> timerModel.pause());
         resetButton.setOnAction(event -> timerModel.reset());
+        controlsHolder.getChildren().addAll(playButton, pauseButton, resetButton);
+        controlsHolder.setAlignment(Pos.CENTER);
+
     }
 
     private ImageView createImageView(String pathToImage) {

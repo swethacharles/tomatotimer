@@ -22,7 +22,7 @@ public class LaunchTomato extends Application
         primaryStage.setTitle("Hello Tomato!");
 
         StackPane root = new StackPane();
-        root.getChildren().add(new TomatoTimerView().getNode());
+        root.getChildren().add(new TomatoTimerView().getView());
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

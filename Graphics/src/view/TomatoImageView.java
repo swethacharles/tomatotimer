@@ -41,7 +41,7 @@ public class TomatoImageView {
     }
 
 
-    public Node getNode(){
+    public ImageView getView(){
         return tomato;
     }
 }

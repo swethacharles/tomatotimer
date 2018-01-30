@@ -21,8 +21,7 @@ public class TimerModel implements Observable {
 
 
     private static final int ONE_SECOND = 1;
-    public static final String DURATION_UPDATE = "DURATION_UPDATE";
-    private static final int MINUTES = 25;
+    private static final int MINUTES = 1;
 
     private boolean playing = false;
     private final ScheduledExecutorService scheduler =
