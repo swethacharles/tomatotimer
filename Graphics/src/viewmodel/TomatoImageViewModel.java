@@ -13,13 +13,14 @@ import java.time.Duration;
 
 public class TomatoImageViewModel implements Observable{
 
+
     private final ObservableManager observableManager;
-    public TimerModel timerModel;
+    private double progressMultiplier = 1.0;
+    private double growthFraction = progressMultiplier * 2;
     private Duration startDuration;
 
     public TomatoImageViewModel(TimerModel timerModel) {
         observableManager = new ObservableManager();
-        this.timerModel = timerModel;
         timerModel.registerFor(TimerStartingEvent.class, this::handleTimerStarted);
         timerModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
     }
@@ -27,8 +28,8 @@ public class TomatoImageViewModel implements Observable{
     private <T extends Event> void handleDurationRemainingUpdate(DurationRemainingUpdateEvent updateEvent) {
         Duration durationRemaining = updateEvent.getDuration();
         long elapsedSeconds = startDuration.getSeconds() - durationRemaining.getSeconds();
-        double progress = elapsedSeconds * 1.0 / startDuration.getSeconds() * 1.0;
-        double growthFraction = progress + 1;
+        double progress = (double) elapsedSeconds / startDuration.getSeconds();
+        double growthFraction = progress + 1.0;
         observableManager.notify(new TomatoGrowEvent(growthFraction));
     }
 
@@ -44,5 +45,9 @@ public class TomatoImageViewModel implements Observable{
     @Override
     public <T extends Event> void deregisterFor(Class<T> eventClass, Observer<T> observer) {
         observableManager.deregisterFor(eventClass, observer);
+    }
+
+    public double getGrowthFraction() {
+        return growthFraction;
     }
 }

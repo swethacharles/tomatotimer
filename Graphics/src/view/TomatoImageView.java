@@ -44,4 +44,8 @@ public class TomatoImageView {
     public ImageView getView(){
         return tomato;
     }
+
+    public double getGrowthFactor(){
+        return viewModel.getGrowthFraction();
+    }
 }

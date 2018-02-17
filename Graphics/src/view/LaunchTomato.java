@@ -12,11 +12,6 @@ import javafx.stage.Stage;
 public class LaunchTomato extends Application
 {
 
-    public static void launchView(){
-        launch();
-    }
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Hello Tomato!");
@@ -26,6 +21,7 @@ public class LaunchTomato extends Application
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
