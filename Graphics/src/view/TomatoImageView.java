@@ -14,21 +14,15 @@ import java.io.FileNotFoundException;
 public class TomatoImageView {
 
     private static final int START_SIZE = 200;
-    private static final String TOMATO_URL = "resources/images/tomato-640.png";
+    private static final String TOMATO_URL = "tomato-640.png";
     private final TomatoImageViewModel viewModel;
     private ImageView tomato;
 
     TomatoImageView(TimerModel timerModel) {
-        FileInputStream inputTomato = null;
-        try {
-            inputTomato = new FileInputStream(TOMATO_URL);
-            tomato = new ImageView(new Image(inputTomato));
-            tomato.setPreserveRatio(true);
-            tomato.setFitHeight(START_SIZE);
-            tomato.setFitWidth(START_SIZE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        tomato = new ImageView(new Image(getClass().getResourceAsStream(TOMATO_URL)));
+        tomato.setPreserveRatio(true);
+        tomato.setFitHeight(START_SIZE);
+        tomato.setFitWidth(START_SIZE);
         this.viewModel = new TomatoImageViewModel(timerModel);
         this.viewModel.registerFor(TomatoGrowEvent.class, this::handleGrow);
     }

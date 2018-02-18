@@ -18,10 +18,12 @@ public class ImageAndControls {
         TomatoImageView imageView = new TomatoImageView(timerModel);
 
         imageAndControls = new GridPane();
-        imageAndControls.add(imageView.getView(), 0, 0);
-        imageAndControls.add(controlsAndTimer, 0, 1);
+        imageAndControls.add(new ChoicePanel().getView(), 0, 0);
+        imageAndControls.add(imageView.getView(), 1, 0);
+        imageAndControls.add(controlsAndTimer, 1, 1);
 
         imageAndControls.setAlignment(Pos.CENTER);
+        imageAndControls.getColumnConstraints().add(new ColumnConstraints());
         imageAndControls.getColumnConstraints().add(new ColumnConstraints(imageView.getView().getFitWidth() * imageView.getGrowthFactor()));
         imageAndControls.getRowConstraints().add(new RowConstraints(imageView.getView().getFitHeight() *imageView.getGrowthFactor()));
         imageAndControls.getRowConstraints().add(new RowConstraints(controlsAndTimer.getPrefHeight()));
