@@ -7,6 +7,7 @@ import eventmanagement.Observer;
 import model.events.DurationRemainingUpdateEvent;
 import model.events.TimerResetEvent;
 import model.events.TimerStartingEvent;
+import model.timertype.TimerTypeModel;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -17,30 +18,31 @@ import java.util.concurrent.TimeUnit;
 import static model.TimerState.*;
 
 
-public class TimerStateModel implements Observable {
+public class TimerModel implements Observable {
 
 
     private static final int ONE_SECOND = 1;
-    private static final int MINUTES = 25;
 
-    private boolean playing = false;
     private final ScheduledExecutorService scheduler =
             Executors.newSingleThreadScheduledExecutor(new TomatoThreadFactory());
+
+    private boolean playing = false;
     private ScheduledFuture<?> scheduledFuture;
     private ObservableManager observableManager = new ObservableManager();
-    private Duration startingTimerDuration = Duration.ofMinutes(MINUTES);
-    private Duration durationRemaining;
     private TimerState state = RESET;
+    private TimerTypeModel typeModel;
+    private Duration durationRemaining;
 
-    public TimerStateModel() {
-        durationRemaining = startingTimerDuration;
+    public TimerModel() {
+        typeModel = new TimerTypeModel();
     }
 
 
 
     public void play() {
         if (canPlay()) {
-            observableManager.notify(new TimerStartingEvent(startingTimerDuration));
+            durationRemaining = typeModel.getStartingTimerDuration();
+            observableManager.notify(new TimerStartingEvent(durationRemaining));
             state = PLAYING;
             scheduledFuture = scheduler.scheduleAtFixedRate(this::fireSecondElapsedEvent, 1, 1, TimeUnit.SECONDS);
         }
@@ -62,6 +64,7 @@ public class TimerStateModel implements Observable {
     private void stop() {
         if(state.equals(PLAYING)){
             state = STOPPED;
+            durationRemaining = Duration.ZERO;
             cancelFuture();
         }
     }
@@ -92,13 +95,12 @@ public class TimerStateModel implements Observable {
     public void reset() {
         if(!state.equals(RESET)){
             stop();
-            durationRemaining = startingTimerDuration;
             observableManager.notify(new TimerResetEvent());
             state = RESET;
         }
     }
 
-    public Duration getTimerDuration() {
-        return startingTimerDuration;
+    public Duration getStartingTimerDuration() {
+        return typeModel.getStartingTimerDuration();
     }
 }

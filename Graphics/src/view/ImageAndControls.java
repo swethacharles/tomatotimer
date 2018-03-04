@@ -4,16 +4,16 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.layout.*;
-import model.TimerStateModel;
+import model.TimerModel;
 
 public class ImageAndControls {
 
     private final GridPane imageAndControls;
 
-    public ImageAndControls(TimerStateModel timerStateModel) {
+    public ImageAndControls(TimerModel timerModel) {
 
-        VBox controlsAndTimer = new ControlsAndTimer(timerStateModel).getView();
-        TomatoImageView imageView = new TomatoImageView(timerStateModel);
+        VBox controlsAndTimer = new ControlsAndTimer(timerModel).getView();
+        TomatoImageView imageView = new TomatoImageView(timerModel);
 
         imageAndControls = new GridPane();
         imageAndControls.add(new ChoicePanel().getView(), 0, 0);

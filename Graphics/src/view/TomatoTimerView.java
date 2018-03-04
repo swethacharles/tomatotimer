@@ -3,7 +3,7 @@ package view;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import model.TimerStateModel;
+import model.TimerModel;
 
 public class TomatoTimerView {
 
@@ -12,8 +12,8 @@ public class TomatoTimerView {
 
     TomatoTimerView() {
         this.view = new BorderPane();
-        TimerStateModel timerStateModel = new TimerStateModel();
-        ImageAndControls imageAndControls = new ImageAndControls(timerStateModel);
+        TimerModel timerModel = new TimerModel();
+        ImageAndControls imageAndControls = new ImageAndControls(timerModel);
 
         view.setCenter(imageAndControls.getView());
         view.setBackground(new Background(new BackgroundImage(

@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import model.TimerStateModel;
+import model.TimerModel;
 import viewmodel.TomatoImageViewModel;
 import viewmodel.events.TomatoResizeEvent;
 
@@ -17,12 +17,12 @@ public class TomatoImageView {
     private ImageView tomato;
     private HBox box;
 
-    TomatoImageView(TimerStateModel timerStateModel) {
+    TomatoImageView(TimerModel timerModel) {
         tomato = new ImageView(new Image(getClass().getResourceAsStream(TOMATO_URL)));
         tomato.setPreserveRatio(true);
         tomato.setFitHeight(START_SIZE);
         tomato.setFitWidth(START_SIZE);
-        this.viewModel = new TomatoImageViewModel(timerStateModel);
+        this.viewModel = new TomatoImageViewModel(timerModel);
         this.viewModel.registerFor(TomatoResizeEvent.class, this::handleGrow);
 
         box = new HBox();

@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import model.TimerStateModel;
+import model.TimerModel;
 import model.events.DurationRemainingUpdateEvent;
 import model.events.TimerResetEvent;
 import utility.TimeFormatter;
@@ -14,26 +14,26 @@ import java.time.Duration;
 
 public class TimerView implements Observer<DurationRemainingUpdateEvent>{
 
-    private final TimerStateModel timerStateModel;
+    private final TimerModel timerModel;
     private HBox timerHolder;
     private Label timeElapsed;
 
-    TimerView(TimerStateModel timerStateModel) {
-        this(timerStateModel, new HBox());
+    TimerView(TimerModel timerModel) {
+        this(timerModel, new HBox());
     }
 
-    private TimerView(TimerStateModel timerStateModel, HBox timerHolder) {
+    private TimerView(TimerModel timerModel, HBox timerHolder) {
         this.timerHolder = timerHolder;
-        this.timeElapsed = new Label(new TimeFormatter().formatDuration(timerStateModel.getTimerDuration()));
-        this.timerStateModel = timerStateModel;
-        timerStateModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
-        timerStateModel.registerFor(TimerResetEvent.class, this::handleReset);
+        this.timeElapsed = new Label(new TimeFormatter().formatDuration(timerModel.getStartingTimerDuration()));
+        this.timerModel = timerModel;
+        timerModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
+        timerModel.registerFor(TimerResetEvent.class, this::handleReset);
         timerHolder.getChildren().add(timeElapsed);
         timerHolder.setAlignment(Pos.CENTER);
     }
 
     private  void handleReset(TimerResetEvent resetEvent) {
-        Duration duration = timerStateModel.getTimerDuration();
+        Duration duration = timerModel.getStartingTimerDuration();
         updateDisplayText(duration);
     }
 

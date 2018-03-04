@@ -4,7 +4,7 @@ import eventmanagement.Event;
 import eventmanagement.Observable;
 import eventmanagement.ObservableManager;
 import eventmanagement.Observer;
-import model.TimerStateModel;
+import model.TimerModel;
 import model.events.DurationRemainingUpdateEvent;
 import model.events.TimerResetEvent;
 import model.events.TimerStartingEvent;
@@ -20,11 +20,11 @@ public class TomatoImageViewModel implements Observable{
     private final ObservableManager observableManager;
     private Duration startDuration;
 
-    public TomatoImageViewModel(TimerStateModel timerStateModel) {
+    public TomatoImageViewModel(TimerModel timerModel) {
         observableManager = new ObservableManager();
-        timerStateModel.registerFor(TimerStartingEvent.class, this::handleTimerStarted);
-        timerStateModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
-        timerStateModel.registerFor(TimerResetEvent.class, resetEvent -> handleTimerRest());
+        timerModel.registerFor(TimerStartingEvent.class, this::handleTimerStarted);
+        timerModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
+        timerModel.registerFor(TimerResetEvent.class, resetEvent -> handleTimerRest());
     }
 
     private <T extends Event> void handleDurationRemainingUpdate(DurationRemainingUpdateEvent updateEvent) {

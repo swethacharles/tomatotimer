@@ -1,4 +1,4 @@
-package model;
+package model.timertype;
 
 public enum TimerType {
     TOMATO,
