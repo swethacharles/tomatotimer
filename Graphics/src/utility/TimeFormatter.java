@@ -1,7 +1,5 @@
 package utility;
 
-import javafx.application.Platform;
-
 import java.time.Duration;
 
 public class TimeFormatter {

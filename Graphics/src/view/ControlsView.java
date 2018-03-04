@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import model.TimerModel;
+import model.TimerStateModel;
 
 /**
  * Responsible for showing the controls of the timer to the user.
@@ -16,13 +16,13 @@ public class ControlsView {
     private final Button playButton;
     private final Button pauseButton;
     private final Button resetButton;
-    private final TimerModel timerModel;
+    private final TimerStateModel timerStateModel;
 
-    public ControlsView(TimerModel timerModel) {
-        this(timerModel, new HBox(), new Button(), new Button(), new Button());
+    public ControlsView(TimerStateModel timerStateModel) {
+        this(timerStateModel, new HBox(), new Button(), new Button(), new Button());
     }
 
-    private ControlsView(TimerModel timerModel, HBox controlsHolder, Button playButton, Button pauseButton, Button resetButton) {
+    private ControlsView(TimerStateModel timerStateModel, HBox controlsHolder, Button playButton, Button pauseButton, Button resetButton) {
         this.playButton = playButton;
         playButton.setGraphic(createImageView("play_image.png"));
         this.pauseButton = pauseButton;
@@ -30,12 +30,12 @@ public class ControlsView {
         this.resetButton = resetButton;
         resetButton.setGraphic(createImageView("refresh_image.png"));
         this.controlsHolder = controlsHolder;
-        this.timerModel = timerModel;
+        this.timerStateModel = timerStateModel;
         controlsHolder.setSpacing(5.0);
 
-        playButton.setOnAction(event -> timerModel.play());
-        pauseButton.setOnAction(event -> timerModel.pause());
-        resetButton.setOnAction(event -> timerModel.reset());
+        playButton.setOnAction(event -> timerStateModel.play());
+        pauseButton.setOnAction(event -> timerStateModel.pause());
+        resetButton.setOnAction(event -> timerStateModel.reset());
         controlsHolder.getChildren().addAll(playButton, pauseButton, resetButton);
         controlsHolder.setAlignment(Pos.CENTER);
 

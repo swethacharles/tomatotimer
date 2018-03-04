@@ -1,6 +1,6 @@
 package model;
 
-public enum  TimerModelState {
+public enum TimerState {
     RESET,
     PAUSED,
     PLAYING,

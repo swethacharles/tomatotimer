@@ -1,15 +1,9 @@
 package view;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import model.TimerModel;
-import viewmodel.TomatoImageViewModel;
+import model.TimerStateModel;
 
 public class TomatoTimerView {
 
@@ -18,8 +12,8 @@ public class TomatoTimerView {
 
     TomatoTimerView() {
         this.view = new BorderPane();
-        TimerModel timerModel = new TimerModel();
-        ImageAndControls imageAndControls = new ImageAndControls(timerModel);
+        TimerStateModel timerStateModel = new TimerStateModel();
+        ImageAndControls imageAndControls = new ImageAndControls(timerStateModel);
 
         view.setCenter(imageAndControls.getView());
         view.setBackground(new Background(new BackgroundImage(

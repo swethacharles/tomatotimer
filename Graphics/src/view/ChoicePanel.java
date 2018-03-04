@@ -1,31 +1,31 @@
 package view;
 
 
-import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static style.view.ChoicePanelCssClass.CHOICE_PANEL;
 
 public class ChoicePanel {
 
-    private final Button restButton;
-    private final Button playButton;
-    private final Button settingsButton;
+
     private final VBox view;
 
     public ChoicePanel() {
-        restButton = new Button();
-        restButton.setGraphic(new ButtonTomatoImageView().getView());
-//        restButton.setBackground(new Background(new BackgroundImage(new ButtonTomatoImageView().getImage()))
-        restButton.setStyle("-fx-background-color: transparent;");
-        restButton.getStyleClass().add("-fx-background-color: transparent;");
-        restButton.getStyleClass().add("-fx-border-color: transparent;");
-
-        playButton = new Button();
-        settingsButton = new Button();
-
         view = new VBox();
-        view.getChildren().addAll(restButton, playButton, settingsButton);
+        ChoiceBox playBox = new ChoiceBox(new ImageView(new Image(getClass().getResourceAsStream("red_tomato_button.png"))));
+        ChoiceBox restBox = new ChoiceBox(new ImageView(new Image(getClass().getResourceAsStream("cucumber_button.png"))));
+
+
+        view.getStyleClass().add(CHOICE_PANEL);
+        view.getChildren().addAll(playBox.getView(), restBox.getView());
+
     }
 
     public VBox getView() {

@@ -14,14 +14,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static model.TimerModelState.*;
+import static model.TimerState.*;
 
 
-public class TimerModel implements Observable {
+public class TimerStateModel implements Observable {
 
 
     private static final int ONE_SECOND = 1;
-    private static final int MINUTES = 1;
+    private static final int MINUTES = 25;
 
     private boolean playing = false;
     private final ScheduledExecutorService scheduler =
@@ -30,9 +30,9 @@ public class TimerModel implements Observable {
     private ObservableManager observableManager = new ObservableManager();
     private Duration startingTimerDuration = Duration.ofMinutes(MINUTES);
     private Duration durationRemaining;
-    private TimerModelState state = RESET;
+    private TimerState state = RESET;
 
-    public TimerModel() {
+    public TimerStateModel() {
         durationRemaining = startingTimerDuration;
     }
 

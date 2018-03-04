@@ -1,15 +1,13 @@
 package view;
 
 import eventmanagement.Event;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import model.TimerModel;
+import javafx.scene.layout.HBox;
+import model.TimerStateModel;
 import viewmodel.TomatoImageViewModel;
-import viewmodel.events.TomatoGrowEvent;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import viewmodel.events.TomatoResizeEvent;
 
 public class TomatoImageView {
 
@@ -17,29 +15,41 @@ public class TomatoImageView {
     private static final String TOMATO_URL = "tomato-640.png";
     private final TomatoImageViewModel viewModel;
     private ImageView tomato;
+    private HBox box;
 
-    TomatoImageView(TimerModel timerModel) {
+    TomatoImageView(TimerStateModel timerStateModel) {
         tomato = new ImageView(new Image(getClass().getResourceAsStream(TOMATO_URL)));
         tomato.setPreserveRatio(true);
         tomato.setFitHeight(START_SIZE);
         tomato.setFitWidth(START_SIZE);
-        this.viewModel = new TomatoImageViewModel(timerModel);
-        this.viewModel.registerFor(TomatoGrowEvent.class, this::handleGrow);
+        this.viewModel = new TomatoImageViewModel(timerStateModel);
+        this.viewModel.registerFor(TomatoResizeEvent.class, this::handleGrow);
+
+        box = new HBox();
+        box.getChildren().add(tomato);
+        box.setAlignment(Pos.CENTER);
     }
 
-    private <T extends Event> void handleGrow(TomatoGrowEvent growEvent) {
-        double newSize = START_SIZE * growEvent.getGrowthFraction();
+    private <T extends Event> void handleGrow(TomatoResizeEvent growEvent) {
+        double newSize = START_SIZE * growEvent.getResizeFraction();
         tomato.setFitWidth(newSize);
         tomato.setFitHeight(newSize);
-
     }
 
 
-    public ImageView getView(){
-        return tomato;
+    public HBox getView(){
+        return box;
     }
 
-    public double getGrowthFactor(){
+    public double imageFitWidth() {
+        return tomato.fitWidthProperty().get();
+    }
+
+    public double imageFitHeight(){
+        return tomato.fitHeightProperty().get();
+    }
+
+    public double getMaxGrowthFactor(){
         return viewModel.getGrowthFraction();
     }
 }

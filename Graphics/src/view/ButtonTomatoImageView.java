@@ -10,10 +10,9 @@ public class ButtonTomatoImageView {
     private final Image image;
 
     public ButtonTomatoImageView() {
-        image = new Image(getClass().getResourceAsStream("tomato-640.png"));
+        image = new Image(getClass().getResourceAsStream("red_tomato_button.png"));
         view = new ImageView(image);
         view.setPreserveRatio(true);
-        view.setFitHeight(30);
     }
 
     public ImageView getView() {
