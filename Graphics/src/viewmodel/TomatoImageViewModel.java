@@ -8,6 +8,7 @@ import model.TimerModel;
 import model.events.DurationRemainingUpdateEvent;
 import model.events.TimerResetEvent;
 import model.events.TimerStartingEvent;
+import model.events.TimerTypeChangeEvent;
 import viewmodel.events.TomatoResizeEvent;
 
 import java.time.Duration;
@@ -15,28 +16,35 @@ import java.time.Duration;
 public class TomatoImageViewModel implements Observable{
 
 
-    private static final double CURRENT_SIZE = 1.0;
+    private static final double STARTING_SIZE = 1.0;
     private static final double PROGRESS_MULTIPLIER = 1.0;
     private final ObservableManager observableManager;
     private Duration startDuration;
 
     public TomatoImageViewModel(TimerModel timerModel) {
         observableManager = new ObservableManager();
+
         timerModel.registerFor(TimerStartingEvent.class, this::handleTimerStarted);
         timerModel.registerFor(DurationRemainingUpdateEvent.class, this::handleDurationRemainingUpdate);
         timerModel.registerFor(TimerResetEvent.class, resetEvent -> handleTimerRest());
+        timerModel.registerFor(TimerTypeChangeEvent.class, this::handleTypeChange);
     }
 
-    private <T extends Event> void handleDurationRemainingUpdate(DurationRemainingUpdateEvent updateEvent) {
+    private void handleTypeChange(TimerTypeChangeEvent timerTypeChangeEvent) {
+
+    }
+
+    private void handleDurationRemainingUpdate(DurationRemainingUpdateEvent updateEvent) {
         Duration durationRemaining = updateEvent.getDuration();
         long elapsedSeconds = startDuration.getSeconds() - durationRemaining.getSeconds();
         double progress = (double) elapsedSeconds / startDuration.getSeconds() * PROGRESS_MULTIPLIER;
-        double resizeFraction = progress + CURRENT_SIZE;
+        double resizeFraction = progress + STARTING_SIZE;
         observableManager.notify(new TomatoResizeEvent(resizeFraction));
     }
 
     private void handleTimerRest() {
-        observableManager.notify(new TomatoResizeEvent(CURRENT_SIZE));
+        observableManager.notify(new TomatoResizeEvent(STARTING_SIZE));
+        startDuration = Duration.ZERO;
     }
 
     private void handleTimerStarted(TimerStartingEvent timerStartingEvent) {
@@ -54,6 +62,6 @@ public class TomatoImageViewModel implements Observable{
     }
 
     public double getGrowthFraction() {
-        return CURRENT_SIZE +PROGRESS_MULTIPLIER;
+        return STARTING_SIZE +PROGRESS_MULTIPLIER;
     }
 }

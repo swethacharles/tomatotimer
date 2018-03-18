@@ -7,8 +7,11 @@ import eventmanagement.Observer;
 import model.events.DurationRemainingUpdateEvent;
 import model.events.TimerResetEvent;
 import model.events.TimerStartingEvent;
+import model.events.TimerTypeChangeEvent;
+import model.timertype.TimerType;
 import model.timertype.TimerTypeModel;
 
+import javax.swing.event.ChangeListener;
 import java.time.Duration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -35,8 +38,8 @@ public class TimerModel implements Observable {
 
     public TimerModel() {
         typeModel = new TimerTypeModel();
+        typeModel.typeProperty().addListener((obs, oldVal, newVal) -> observableManager.notify(new TimerTypeChangeEvent(newVal)));
     }
-
 
 
     public void play() {
@@ -81,6 +84,22 @@ public class TimerModel implements Observable {
     }
 
 
+    public void reset() {
+        if(!state.equals(RESET)){
+            stop();
+            observableManager.notify(new TimerResetEvent());
+            state = RESET;
+        }
+    }
+
+    public void setType(TimerType type){
+        typeModel.setType(type);
+    }
+
+    public Duration getStartingTimerDuration() {
+        return typeModel.getStartingTimerDuration();
+    }
+
     @Override
     public <T extends Event> void registerFor(Class<T> eventClass, Observer<T> observer) {
         observableManager.registerFor(eventClass, observer);
@@ -90,17 +109,5 @@ public class TimerModel implements Observable {
     public <T extends Event> void deregisterFor(Class<T> eventClass, Observer<T> observer) {
         observableManager.deregisterFor(eventClass, observer);
 
-    }
-
-    public void reset() {
-        if(!state.equals(RESET)){
-            stop();
-            observableManager.notify(new TimerResetEvent());
-            state = RESET;
-        }
-    }
-
-    public Duration getStartingTimerDuration() {
-        return typeModel.getStartingTimerDuration();
     }
 }

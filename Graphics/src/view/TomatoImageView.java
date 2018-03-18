@@ -14,39 +14,39 @@ public class TomatoImageView {
     private static final int START_SIZE = 200;
     private static final String TOMATO_URL = "tomato-640.png";
     private final TomatoImageViewModel viewModel;
-    private ImageView tomato;
-    private HBox box;
+    private ImageView imageView;
 
     TomatoImageView(TimerModel timerModel) {
-        tomato = new ImageView(new Image(getClass().getResourceAsStream(TOMATO_URL)));
-        tomato.setPreserveRatio(true);
-        tomato.setFitHeight(START_SIZE);
-        tomato.setFitWidth(START_SIZE);
         this.viewModel = new TomatoImageViewModel(timerModel);
         this.viewModel.registerFor(TomatoResizeEvent.class, this::handleGrow);
 
-        box = new HBox();
-        box.getChildren().add(tomato);
+        imageView = new ImageView(new Image(getClass().getResourceAsStream(TOMATO_URL)));
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(START_SIZE);
+        imageView.setFitWidth(START_SIZE);
+
+        HBox box = new HBox();
+        box.getChildren().add(imageView);
         box.setAlignment(Pos.CENTER);
     }
 
     private <T extends Event> void handleGrow(TomatoResizeEvent growEvent) {
         double newSize = START_SIZE * growEvent.getResizeFraction();
-        tomato.setFitWidth(newSize);
-        tomato.setFitHeight(newSize);
+        imageView.setFitWidth(newSize);
+        imageView.setFitHeight(newSize);
     }
 
 
-    public HBox getView(){
-        return box;
+    public ImageView getView(){
+        return imageView;
     }
 
     public double imageFitWidth() {
-        return tomato.fitWidthProperty().get();
+        return imageView.fitWidthProperty().get();
     }
 
     public double imageFitHeight(){
-        return tomato.fitHeightProperty().get();
+        return imageView.fitHeightProperty().get();
     }
 
     public double getMaxGrowthFactor(){
